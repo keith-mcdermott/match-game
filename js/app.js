@@ -46,6 +46,7 @@ for (var i = 0; i < cards.length; i++){
 // Variable cardList holds the cards being matched, cardType holds card <i> classes which are used for matching
 var cardType=[];
 var cardList=[];
+var cardCounter=[];
 
 // Toggle open and show classes in response to click and add "avoid-click" class that uses CSS to prevent double-clicking and matching a single card
 function showCard(){
@@ -70,10 +71,15 @@ function compareCards(){
       cardList[1].classList.remove("show", "open", "avoid-clicks");
       allowClick();
       clearLists();
+      cardCounter.push(cardList[0]);
+      cardCounter.push(cardList[1]);
+      gameEnd();
     } else {
+      cardList[0].classList.add("no-match");
+      cardList[1].classList.add("no-match");
         setTimeout(function(){
-          cardList[0].classList.remove("show", "open", "avoid-clicks");
-          cardList[1].classList.remove("show", "open", "avoid-clicks");
+          cardList[0].classList.remove("show", "open", "avoid-clicks", "no-match");
+          cardList[1].classList.remove("show", "open", "avoid-clicks", "no-match");
           allowClick();
           clearLists();
         }, 1000);
@@ -116,6 +122,9 @@ function moveCounter(){
 
 let rating=document.getElementsByClassName('fa fa-star');
 let stars = Array.from(rating);
+// Array used to count how many final stars at end of game
+let finalStarRating = Array.from(rating);
+
 
 // Reduce star rating based on number of moves
 function starRating(){
@@ -125,14 +134,35 @@ function starRating(){
   if (moves > 24){
     stars[1].style.visibility = "collapse";
   };
+  if (moves==12){
+    finalStarRating.pop();
+    console.log(finalStarRating);
+  }
+  if (moves==24){
+    finalStarRating.pop();
+    console.log(finalStarRating);
+  }
 }
+
 
 // Reset game after clicking icon
 var resetClass = document.getElementsByClassName('restart');
 var restart=resetClass.item(0);
 restart.onclick = function (){
   window.location.reload();
-};
+}
+
+// Display modal
+var modal = document.getElementById('myModal');
+var finalScore=document.getElementById('final-score');
+console.log(finalScore);
+function gameEnd(){
+  if (cardCounter.length==2){
+    modal.style.display = "block";
+    finalScore.innerHTML = "With " + moves + " Moves and "+finalStarRating.length+" Stars" ;
+  };
+}
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
