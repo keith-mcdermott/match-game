@@ -63,12 +63,16 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transition: 700ms;
+    transform-style: preserve-3d;
+    position: relative;
 }
 
 .deck .card.open {
-    transform: rotateY(180);
+    transform: rotateY(180deg);
     background: #02b3e4;
     cursor: default;
+
 }
 
 .deck .card.show {
@@ -128,19 +132,42 @@ Styles for modal
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.4);
 }
 
 .modal-content {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
     background-color: #FFF;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    height:50%;
-    text-align: center;
+    border-radius: 10px;
+    margin-top: 50px;
+    width: 700px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.5em;
 }
 
 h2 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: lighter;
   font-size: 1.5rem;
+}
+
+#play-again-btn {
+  cursor: pointer;
+  color: #FFF;
+  background-color: #3e62ad;
+  border-color: #2a4275;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width:20%;
+  margin: 10px auto;
+  text-align: center;
 }

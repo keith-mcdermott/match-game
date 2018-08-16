@@ -1,17 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
- // Creat array containing cards
+ // Array containing cards
 let card = document.getElementsByClassName('card');
 let cards = Array.from(card);
-// console.log(cards);
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -48,7 +40,8 @@ var cardType=[];
 var cardList=[];
 var cardCounter=[];
 
-// Toggle open and show classes in response to click and add "avoid-click" class that uses CSS to prevent double-clicking and matching a single card
+// Toggle open and show classes in response to click
+// Add "avoid-click" class that uses CSS to prevent double-clicking and matching a single card
 function showCard(){
      this.classList.toggle("open");
      this.classList.toggle("show");
@@ -67,8 +60,8 @@ function compareCards(){
     if (cardType[0] === cardType[1]){
       cardList[0].classList.add("match");
       cardList[1].classList.add("match");
-      cardList[0].classList.remove("show", "open", "avoid-clicks");
-      cardList[1].classList.remove("show", "open", "avoid-clicks");
+      cardList[0].classList.remove("show", "open");
+      cardList[1].classList.remove("show", "open");
       allowClick();
       clearLists();
       cardCounter.push(cardList[0]);
@@ -106,13 +99,13 @@ function allowClick(){
     });
 }
 
-// move counter
+// Move counter
 var moves=0;
 var totalMoves=document.getElementById('moves');
 function moveCounter(){
   moves++;
   starRating();
-//account for "Move" vs "Moves"
+//Account for "Move" vs "Moves"
   if (moves===1){
     totalMoves.innerHTML = moves + " Move";
   } else {
@@ -122,7 +115,7 @@ function moveCounter(){
 
 let rating=document.getElementsByClassName('fa fa-star');
 let stars = Array.from(rating);
-// Array used to count how many final stars at end of game
+// Array used to count how many final stars are left at the end of the game
 let finalStarRating = Array.from(rating);
 
 
@@ -134,13 +127,8 @@ function starRating(){
   if (moves > 24){
     stars[1].style.visibility = "collapse";
   };
-  if (moves==12){
+  if (moves==12 || moves==24){
     finalStarRating.pop();
-    console.log(finalStarRating);
-  }
-  if (moves==24){
-    finalStarRating.pop();
-    console.log(finalStarRating);
   }
 }
 
@@ -155,22 +143,17 @@ restart.onclick = function (){
 // Display modal
 var modal = document.getElementById('myModal');
 var finalScore=document.getElementById('final-score');
-console.log(finalScore);
 function gameEnd(){
-  if (cardCounter.length==2){
+  setTimeout(function(){
+    if (cardCounter.length==16){
     modal.style.display = "block";
     finalScore.innerHTML = "With " + moves + " Moves and "+finalStarRating.length+" Stars" ;
-  };
+    }
+  }, 700);
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+// Play again button on modal
+var replayBtn = document.getElementById('play-again-btn');
+  replayBtn.onclick = function (){
+  window.location.reload();
+}
