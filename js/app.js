@@ -26,13 +26,13 @@ const readyCards = shuffle(cards);
 // Loop through node list containing shuffled cards and append HTML of randomized deck
 for (let i=0; i<cards.length; i++){
          Array.prototype.forEach.call(readyCards, function(x){
-         document.querySelector(".deck").appendChild(x);
+         document.querySelector('.deck').appendChild(x);
       });
 }
 
 // Add event listener
 for (var i = 0; i < cards.length; i++){
-   cards[i].addEventListener("click", showCard);
+   cards[i].addEventListener('click', showCard);
 }
 
 // Variable cardList holds the cards being matched, cardType holds card <i> classes which are used for matching
@@ -41,11 +41,12 @@ var cardList=[];
 var cardCounter=[];
 
 // Toggle open and show classes in response to click
-// Add "avoid-click" class that uses CSS to prevent double-clicking and matching a single card
+// Add "avoid-click" class that uses CSS to temporarily prevent double-clicking and matching a single card
+// "locked" class permanently disables matched cards
 function showCard(){
-     this.classList.toggle("open");
-     this.classList.toggle("show");
-     this.classList.toggle("avoid-clicks");
+     this.classList.toggle('open');
+     this.classList.toggle('show');
+     this.classList.toggle('avoid-clicks');
      cardType.push(this.firstElementChild.className);
      cardList.push(this);
      compareCards();
@@ -58,21 +59,21 @@ function compareCards(){
     preventClick();
     moveCounter();
     if (cardType[0] === cardType[1]){
-      cardList[0].classList.add("match");
-      cardList[1].classList.add("match");
-      cardList[0].classList.remove("show", "open");
-      cardList[1].classList.remove("show", "open");
+      cardList[0].classList.add('match', 'locked');
+      cardList[1].classList.add('match', 'locked');
+      cardList[0].classList.remove('show', 'open');
+      cardList[1].classList.remove('show', 'open');
       allowClick();
       clearLists();
       cardCounter.push(cardList[0]);
       cardCounter.push(cardList[1]);
       gameEnd();
     } else {
-      cardList[0].classList.add("no-match");
-      cardList[1].classList.add("no-match");
+      cardList[0].classList.add('no-match');
+      cardList[1].classList.add('no-match');
         setTimeout(function(){
-          cardList[0].classList.remove("show", "open", "avoid-clicks", "no-match");
-          cardList[1].classList.remove("show", "open", "avoid-clicks", "no-match");
+          cardList[0].classList.remove('show', 'open', 'avoid-clicks', 'no-match');
+          cardList[1].classList.remove('show', 'open', 'avoid-clicks', 'no-match');
           allowClick();
           clearLists();
         }, 1000);
@@ -107,9 +108,9 @@ function moveCounter(){
   starRating();
 //Account for "Move" vs "Moves"
   if (moves===1){
-    totalMoves.innerHTML = moves + " Move";
+    totalMoves.innerHTML = moves + ' Move';
   } else {
-    totalMoves.innerHTML = moves + " Moves";
+    totalMoves.innerHTML = moves + ' Moves';
   };
 }
 
@@ -122,10 +123,10 @@ let finalStarRating = Array.from(rating);
 // Reduce star rating based on number of moves
 function starRating(){
   if (moves > 12) {
-    stars[0].style.visibility = "collapse";
+    stars[0].style.visibility = 'collapse';
   };
   if (moves > 24){
-    stars[1].style.visibility = "collapse";
+    stars[1].style.visibility = 'collapse';
   };
   if (moves==12 || moves==24){
     finalStarRating.pop();
@@ -146,14 +147,14 @@ var finalScore=document.getElementById('final-score');
 function gameEnd(){
   setTimeout(function(){
     if (cardCounter.length==16){
-    modal.style.display = "block";
-    finalScore.innerHTML = "With " + moves + " Moves and "+finalStarRating.length+" Stars" ;
+    modal.style.display = 'block';
+    finalScore.innerHTML = 'With ' + moves + ' Moves and ' + finalStarRating.length + ' Stars' ;
     }
   }, 700);
 }
 
 // Play again button on modal
 var replayBtn = document.getElementById('play-again-btn');
-  replayBtn.onclick = function (){
+replayBtn.onclick = function (){
   window.location.reload();
 }

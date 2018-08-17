@@ -93,6 +93,10 @@ h1 {
   pointer-events: none;
 }
 
+.deck .card.locked {
+  pointer-events: none;
+}
+
 /*
  * Styles for the Score Panel
  */
