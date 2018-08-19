@@ -171,10 +171,11 @@ let finalScore=document.getElementById('final-score');
 let gameTime=document.getElementById('game-time');
 function gameEnd(){
   setTimeout(function(){
-    if (cardCounter.length==2){
+    if (cardCounter.length == 16){
     modal.style.display = 'block';
     finalScore.innerHTML = 'With ' + moves + ' Moves and ' + finalStarRating.length + ' Stars' ;
     let secondText, minuteText;
+// The following if statements account for single vs plural second and minute
     if (sec == 1) {
       secondText = ' Second';
     } else {
