@@ -8,7 +8,7 @@
 
 ## Description
 
-An interactive memory game. Match card pairs to win. The number of moves are tracked and stars awarded based on performance.
+An interactive memory game. Match card pairs to win. The number of moves and time taken are tracked, and stars are awarded based on performance.
 
 ## How to Play
 

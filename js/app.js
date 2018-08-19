@@ -7,8 +7,7 @@ let cards = Array.from(card);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
+    let currentIndex = array.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -36,9 +35,10 @@ for (var i = 0; i < cards.length; i++){
 }
 
 // Variable cardList holds the cards being matched, cardType holds card <i> classes which are used for matching
-var cardType=[];
-var cardList=[];
-var cardCounter=[];
+let cardType=[];
+let cardList=[];
+let cardCounter=[];
+let execute = false;
 
 // Toggle open and show classes in response to click
 // Add "avoid-click" class that uses CSS to temporarily prevent double-clicking and matching a single card
@@ -50,11 +50,16 @@ function showCard(){
      cardType.push(this.firstElementChild.className);
      cardList.push(this);
      compareCards();
-};
+// Following if statement ensures that the game timer will only initialze once, on the first card click (not the first move, which is two card clicks) - from https://stackoverflow.com/questions/12713564/function-in-javascript-that-can-be-called-only-once
+     if (!execute){
+       runTimer();
+       execute=true;
+     };
+}
 
 // Compare cards and style with CSS
 function compareCards(){
-  var len = cardList.length;
+  let len = cardList.length;
   if (len === 2){
     preventClick();
     moveCounter();
@@ -101,13 +106,13 @@ function allowClick(){
 }
 
 // Move counter
-var moves=0;
-var totalMoves=document.getElementById('moves');
+let moves = 0;
+let totalMoves=document.getElementById('moves');
 function moveCounter(){
   moves++;
   starRating();
 //Account for "Move" vs "Moves"
-  if (moves===1){
+  if (moves == 1){
     totalMoves.innerHTML = moves + ' Move';
   } else {
     totalMoves.innerHTML = moves + ' Moves';
@@ -141,20 +146,58 @@ restart.onclick = function (){
   window.location.reload();
 }
 
+// Game timer
+let min = 0;
+let sec = 0;
+function runTimer(){
+  let clock = document.getElementById('clock');
+  setInterval(function (){
+    if (sec < 10){
+      sec= '0'+sec;
+    }
+  clock.innerHTML=min+':'+sec;
+  if (sec === 59) {
+      min++;
+      sec = 0;
+    } else {
+      sec++;
+    };
+  },1000);
+}
+
 // Display modal
-var modal = document.getElementById('myModal');
-var finalScore=document.getElementById('final-score');
+let modal = document.getElementById('myModal');
+let finalScore=document.getElementById('final-score');
+let gameTime=document.getElementById('game-time');
 function gameEnd(){
   setTimeout(function(){
-    if (cardCounter.length==16){
+    if (cardCounter.length==2){
     modal.style.display = 'block';
     finalScore.innerHTML = 'With ' + moves + ' Moves and ' + finalStarRating.length + ' Stars' ;
-    }
+    let secondText, minuteText;
+    if (sec == 1) {
+      secondText = ' Second';
+    } else {
+      secondText = ' Seconds';
+    };
+    if (min == 1){
+      minuteText=' Minute';
+    } else {
+      minuteText=' Minutes';
+    };
+    if (min == 0){
+      gameTime.innerHTML = 'In ' + sec + secondText;
+      } else if (min == 1) {
+        gameTime.innerHTML = 'In ' + min + minuteText + ' and ' + sec + secondText;
+      } else {
+        gameTime.innerHTML = 'In ' + min + minuteText + ' and ' + sec + secondText;
+      };
+    };
   }, 700);
 }
 
 // Play again button on modal
-var replayBtn = document.getElementById('play-again-btn');
+let replayBtn = document.getElementById('play-again-btn');
 replayBtn.onclick = function (){
   window.location.reload();
 }

@@ -103,8 +103,14 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 660px;
     margin-bottom: 10px;
+}
+
+.star-rating {
+  display: inline-block;
+  margin-left: 35px;
+  width: 300px;
 }
 
 .score-panel .stars {
@@ -119,10 +125,16 @@ h1 {
     display: inline-block;
 }
 
+#clock {
+  display: inline-block;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    margin-right: 35px;
 }
+
 
 /*
 Styles for modal
